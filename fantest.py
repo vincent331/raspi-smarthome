@@ -1,0 +1,24 @@
+import RPi.GPIO as GPIO
+import time
+
+# ===== CHANGE THIS IF NEEDED =====
+FAN_PIN = 17
+# =================================
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(FAN_PIN, GPIO.OUT)
+
+fan_pwm = GPIO.PWM(FAN_PIN, 1000)  # 1kHz frequency
+fan_pwm.start(0)
+
+try:
+    while True:
+        speed = int(input("Enter fan speed (0-100): "))
+        speed = max(0, min(100, speed))  # clamp
+        fan_pwm.ChangeDutyCycle(speed)
+        print(f"Fan speed set to {speed}%")
+
+except KeyboardInterrupt:
+    print("Stopping fan...")
+    fan_pwm.stop()
+    GPIO.cleanup()
