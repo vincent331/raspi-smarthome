@@ -6,10 +6,8 @@ import adafruit_bme280
 import threading
 import time
 
-# ===== CHANGE PINS IF NEEDED =====
 FAN_PIN = 17
 HEATER_PIN = 27
-# ================================
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(FAN_PIN, GPIO.OUT)
@@ -19,11 +17,10 @@ fan_pwm = GPIO.PWM(FAN_PIN, 1000)
 fan_pwm.start(0)
 GPIO.output(HEATER_PIN, GPIO.LOW)
 
-# I2C setup for BME280
 i2c = busio.I2C(board.SCL, board.SDA)
 bme = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x76)
 
-target_temp = 22  # default
+target_temp = 22
 
 app = Flask(__name__)
 
