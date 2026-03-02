@@ -2,23 +2,11 @@
 Smart home technology club readme
 
 Todo list:
--Flask
+-Flask (ALL Done!)
 -Wiring
-
-
-
-Flask setup:
-
-sudo apt update
-sudo apt upgrade -y
-sudo apt install python3 python3-pip -y
-pip3 install flask
-(python3 -m flask --version)
-try flasktest.py
 
 use hostname -I
 then http://ip:5000 -> has to use same wifi so no ethernet
-
 
 
 i2c errors:
@@ -34,4 +22,23 @@ GPIO -> 220ohms ---> gate
 Source -> gnd (const)
 Drain -> Fan/Heater -
 Fan/Heater + -> 5v external
+
+
+VCC -> fan +
+Fan - -> MOSFET Drain
+MOSFET source -> GND
+GPIO -> 220ohms -> MOSFET Gate
+then, MOSFET Gate -> 10kohms -> gnd
+if you can, use flyback diode to prevent voltage spikes:
+stripe cathode -> VCC
+other anode -> Fan -
+
+
+VCC -> heater +
+heater - -> MOSFET Drain
+MOSFET Source -> GND
+GPIO -> 220ohms -> MOSFET Gate
+then, MOSFET Gate -> 10kohms -> gnd
+
+
 
