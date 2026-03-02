@@ -54,14 +54,13 @@ def control_loop():
         temp = bme.temperature
         error = temp - target_temp
 
-        # Heater ON/OFF
+        #ON/OFF
         if temp < target_temp - 0.5:
             GPIO.output(HEATER_PIN, GPIO.HIGH)
         elif temp > target_temp + 0.5:
             GPIO.output(HEATER_PIN, GPIO.LOW)
 
-        # Fan speed proportional to temp above target
-        fan_speed = max(0, min(100, error * 20))  # 1°C above → 20%
+        fan_speed = max(0, min(100, error * 20))
         fan_pwm.ChangeDutyCycle(fan_speed)
 
         time.sleep(2)
