@@ -1,6 +1,6 @@
 # CLS Smart Home Tech Research Club README
 
-
+Code for a Smart Home Technology Experiment, where we take two scale model houses, heat them to a set temperature, and track how the temperaure falls using a BME280. The houses have two different roofs, a flat one and a slant one, and we want to see how the difference in the area of the house will affect air flow and thus thermal dissipation. The experiment is also to be expanded into the use of fans for cooling with these house types, and hopefully a future experiment based of facade area against house area and the airflow in those cases. With funding from the Royal Society and help from an experienced architect, we are going to test out how houses can be built to accommodate smart technologies better, and learn lots along the way.
 
 
 
