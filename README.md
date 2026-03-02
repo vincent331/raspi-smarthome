@@ -1,19 +1,36 @@
-# raspi-smarthome
-Smart home technology club readme
+# CLS Smart Home Tech Research Club README
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------NOTES-----------------------------------------
 
 Todo list:
 -Flask (ALL Done!)
 -Wiring
-
-use hostname -I
-then http://ip:5000 -> has to use same wifi so no ethernet
+-Start a preliminary experiment!
+-Work on code for auto-experiment
+-Work on a description for the club for readme @Arjun
+-Add an INA226 to measure energy usage - how can we minimise this?
 
 
 i2c errors:
 
 sudo raspi-config
 enable interface options, then i2c
-then sudo i2cdetect -y 1 (0x76, 0x77?)
+then sudo i2cdetect -y 1 (look at bme and also the oled display module)
 
 
 Wiring:
@@ -53,3 +70,7 @@ oled vcc -> 3v3 pi
 oled gnd -> pi gnd
 oled sda -> gpio2
 oled scl -> gpio3
+
+
+Quick Notes:
+-
