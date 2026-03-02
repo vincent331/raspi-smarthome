@@ -41,4 +41,15 @@ GPIO -> 220ohms -> MOSFET Gate
 then, MOSFET Gate -> 10kohms -> gnd
 
 
+BME280:
+bme vcc -> 3v3 pi
+bme gnd -> pi gnd
+bme sda -> gpio2
+bme scl -> gpio3
 
+
+OLED:
+oled vcc -> 3v3 pi
+oled gnd -> pi gnd
+oled sda -> gpio2
+oled scl -> gpio3
