@@ -163,5 +163,8 @@ oled scl -> gpio3
 26.58
 26.60
 26.62
+This data we collected after testing out the heating and rate of heating in the room. Unfortunately, we could not finish the heating in the time we had, but there is a chart below to show the date we did collect.
+<img width="586" height="357" alt="image" src="https://github.com/user-attachments/assets/3b7eed1e-69fb-4fa8-8685-0e2bbbd98a6a" />
+
 Quick Notes:
 -
