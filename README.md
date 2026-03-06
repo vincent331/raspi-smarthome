@@ -18,3 +18,8 @@ Hi. We are students based in London in the UK. Our goal is to create the ultimat
 |------------|--------|
 | [Flat roof experiment](Flatroof.md) | n/a |
 
+## Our code
+
+| Name | Description |
+|------|-------------|
+| [bmetest](bmetest.py) | A program for quickly diagnosing the bme280 sensor which we use to record the temperature. |
