@@ -74,96 +74,7 @@ oled scl -> gpio3
 
 TEST 1 - unfinished:
 
-27.69
-27.40
-27.22
-27.10
-26.96
-26.82
-26.70
-26.54
-26.40
-26.28
-26.12
-26.00
-25.89
-25.77
-25.67
-25.56
-25.48
-25.39
-25.32
-25.25
-25.18
-25.13
-25.07
-25.03
-24.99
-24.95
-24.91
-24.91
-24.95
-24.94
-24.92
-24.93
-24.96
-25.00
-25.03
-25.06
-25.07
-25.08
-25.13
-25.15
-25.17
-25.20
-25.23
-25.25
-25.28
-25.31
-25.33
-25.35
-25.38
-25.40
-25.42
-25.45
-25.48
-25.50
-25.53
-25.55
-25.61
-25.67
-25.71
-25.77
-25.81
-25.86
-25.91
-25.94
-25.99
-26.02
-26.07
-26.10
-26.15
-26.17
-26.20
-26.23
-26.26
-26.28
-26.31
-26.34
-26.36
-26.38
-26.42
-26.45
-26.47
-26.49
-26.51
-26.52
-26.54
-26.56
-26.58
-26.60
-26.62
-This data we collected after testing out the heating and rate of heating in the room. Unfortunately, we could not finish the heating in the time we had, but there is a chart below to show the date we did collect.
+We started our first test using the house with the flat roof and all windows and doors secured with tape. Unfortunately, we could not finish the heating in the time we had, but there is a chart below to show the date we did collect.
 <img width="591" height="356" alt="image" src="https://github.com/user-attachments/assets/00c35206-4ce2-40d7-9216-d77fa3e377c0" />
 
 
@@ -258,8 +169,13 @@ TEST 2 - unfinished:
 27.32
 27.35
 27.36
-Did not finish this experiment due to lack of time, this time starting from the lowest temperature and heating from there - no need for cooling. However, was inaccurate due to door of house falling out and having to be fixed. Image below:
+Did not finish this experiment due to lack of time, this time starting from the lowest temperature and heating from there - no need for cooling the room at the start. Image below:
 <img width="579" height="354" alt="image" src="https://github.com/user-attachments/assets/76c71fa9-d967-42c8-b18b-013227259105" />
+
+TEST 3:
+Ran an experiment for an hour where we heated the house to about 28 degrees then cooled it in the time we had - it did not go all the way to the starting 24.5 degrees. Graph below shows the steeper temperature decline compared to the increase in temperature. There was some inaccuracy from the door being opened sometimes and the windows having to be re-taped several times, causing some lapses which are wisible in the graph.
+<img width="591" height="365" alt="image" src="https://github.com/user-attachments/assets/fb67a79f-1fcd-4a8a-896a-0aee96c270c9" />
+
 
 Quick Notes:
 -
