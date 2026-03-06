@@ -72,7 +72,7 @@ oled sda -> gpio2
 oled scl -> gpio3
 
 
-
+TEST 1 - unfinished:
 
 27.69
 27.40
@@ -164,13 +164,11 @@ oled scl -> gpio3
 26.60
 26.62
 This data we collected after testing out the heating and rate of heating in the room. Unfortunately, we could not finish the heating in the time we had, but there is a chart below to show the date we did collect.
-<img width="586" height="357" alt="image" src="https://github.com/user-attachments/assets/3b7eed1e-69fb-4fa8-8685-0e2bbbd98a6a" />
+<img width="591" height="356" alt="image" src="https://github.com/user-attachments/assets/00c35206-4ce2-40d7-9216-d77fa3e377c0" />
 
 
 
-
-
-
+TEST 2 - unfinished:
 
 24.65
 24.67
@@ -260,7 +258,8 @@ This data we collected after testing out the heating and rate of heating in the 
 27.32
 27.35
 27.36
-
+Did not finish this experiment due to lack of time, this time starting from the lowest temperature and heating from there - no need for cooling. However, was inaccurate due to door of house falling out and having to be fixed. Image below:
+<img width="579" height="354" alt="image" src="https://github.com/user-attachments/assets/76c71fa9-d967-42c8-b18b-013227259105" />
 
 Quick Notes:
 -
