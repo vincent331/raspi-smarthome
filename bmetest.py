@@ -8,5 +8,5 @@ bme280.sea_level_pressure = 1013.25
 
 while True:
     x = bme280.temperature
-    print(f'{x:.2f}')
+    print(f'{x:.4f}')
     time.sleep(5)
