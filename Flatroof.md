@@ -43,9 +43,9 @@ The temperature rise (with fan for airflow):
 <img width="362" height="218" alt="image" src="https://github.com/user-attachments/assets/71328176-eebc-44dd-9c2a-6d6e523a9fa7" />
 
 The temperature loss:
-| Starting temperature | Final temperature | Minimum temperature | % Drop in temp | Rate of temperature decrease | Average % temp rise per minute | Time taken |
+| Starting temperature | Final temperature | Minimum temperature | % Drop in temp | Rate of temperature decrease | Average % temp drop per minute | Time taken |
 |----------------------|-------------------|---------------------|----------------|------------------------------|--------------------------------|------------|
-| 28.76C | 24.27C | 24.27C | 15.6% | 0.26C/min | 17m | 
+| 28.76C | 24.27C | 24.27C | 15.6% | 0.26C/min | 0.92%/min | 17m | 
 
 <img width="861" height="544" alt="image" src="https://github.com/user-attachments/assets/3a3f2feb-d8df-4250-96c6-232656c43a5f" />
 
