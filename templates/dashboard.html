@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Home Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+            background: #f2f2f5;
+            color: #111;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card {
+            display: inline-block;
+            background: white;
+            padding: 20px;
+            margin: 15px;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+            min-width: 200px;
+        }
+
+        h2 { margin-bottom: 10px; }
+        p { font-size: 1.2em; }
+        input[type=range] { width: 80%; }
+        button { 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 10px; 
+            background: #007aff; 
+            color: white; 
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smart Home Dashboard</h1>
+
+    <div class="card">
+        <h2>Temperature Sensors</h2>
+        <p>Sensor 1: <span id="temp1">{{ temp1 }}</span> °C</p>
+        <p>Sensor 2: <span id="temp2">{{ temp2 }}</span> °C</p>
+    </div>
+
+    <div class="card">
+        <h2>Fan Controls</h2>
+        <p>Fan 1 PWM: <span id="fan1">{{ fan1 }}</span>%</p>
+        <input type="range" min="0" max="100" value="{{ fan1 }}" id="fan1slider">
+        <p>Fan 2 PWM: <span id="fan2">{{ fan2 }}</span>%</p>
+        <input type="range" min="0" max="100" value="{{ fan2 }}" id="fan2slider">
+    </div>
+
+    <div class="card">
+        <h2>Heater Controls</h2>
+        <button onclick="toggleHeater('heater1')">Toggle Heater 1</button>
+        <p>Heater 1 State: <span id="heater1">{{ heater1 }}</span></p>
+        <button onclick="toggleHeater('heater2')">Toggle Heater 2</button>
+        <p>Heater 2 State: <span id="heater2">{{ heater2 }}</span></p>
+    </div>
+
+    <div class="card">
+        <h2>Target Temperature</h2>
+        <input type="range" min="15" max="35" value="{{ target_temp }}" id="targetTempSlider">
+        <p>Target: <span id="targetTemp">{{ target_temp }}</span> °C</p>
+    </div>
+
+<script>
+function updateDevice(device, state) {
+    fetch('/control_device', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({device: device, state: state})
+    });
+}
+
+function toggleHeater(device) {
+    let stateElem = document.getElementById(device);
+    let state = stateElem.innerText == "1" ? "off" : "on";
+    updateDevice(device, state);
+}
+
+// Fan sliders
+document.getElementById('fan1slider').addEventListener('input', (e) => {
+    document.getElementById('fan1').innerText = e.target.value;
+    updateDevice('fan1', e.target.value);
+});
+document.getElementById('fan2slider').addEventListener('input', (e) => {
+    document.getElementById('fan2').innerText = e.target.value;
+    updateDevice('fan2', e.target.value);
+});
+
+// Target temp slider
+document.getElementById('targetTempSlider').addEventListener('input', (e) => {
+    let target = e.target.value;
+    document.getElementById('targetTemp').innerText = target;
+
+    fetch('/set_target', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `target=${target}`
+    });
+});
+
+// Auto-refresh sensor values every 5s
+setInterval(async () => {
+    const res = await fetch('/api/temps');
+    const data = await res.json();
+    document.getElementById('temp1').innerText = data.temp1;
+    document.getElementById('temp2').innerText = data.temp2;
+    document.getElementById('fan1').innerText = data.fan1;
+    document.getElementById('fan2').innerText = data.fan2;
+    document.getElementById('heater1').innerText = data.heater1;
+    document.getElementById('heater2').innerText = data.heater2;
+    document.getElementById('targetTemp').innerText = data.target_temp;
+}, 5000);
+</script>
+</body>
+</html>
