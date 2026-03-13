@@ -51,3 +51,16 @@ The temperature loss:
 
 
 
+### Experiment 3
+> This experiment measured heat gain only without the use of a fan for circulation.
+
+| Starting temperature | Final temperature | Maximum temperature | % Rise in temp | Rate of temperature increase | Average % temp drop per minute | Time taken |
+|----------------------|-------------------|---------------------|----------------|------------------------------|--------------------------------|------------|
+| 20.49C | 26.05C | 26.06C | 27.1% | 0.16C/min | 0.65%/min | 41m40s |
+
+<img width="1147" height="509" alt="image" src="https://github.com/user-attachments/assets/bc3ff706-3482-4e68-8bf1-129842fa5e4a" />
+
+
+
+
+
