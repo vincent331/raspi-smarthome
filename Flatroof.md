@@ -52,7 +52,7 @@ The temperature loss:
 
 
 ### Experiment 3
-> This experiment measured heat gain only without the use of a fan for circulation.
+> This experiment measured heat gain only without the use of a fan for circulation. We had quite alot of time to do this experiment, leaving it on for a whopping 41 minutes of only heat increase. This experiment was significant as it provided more indisputable evidence supporting the airflow argument.
 
 | Starting temperature | Final temperature | Maximum temperature | % Rise in temp | Rate of temperature increase | Average % temp drop per minute | Time taken |
 |----------------------|-------------------|---------------------|----------------|------------------------------|--------------------------------|------------|
@@ -61,6 +61,10 @@ The temperature loss:
 <img width="1147" height="509" alt="image" src="https://github.com/user-attachments/assets/bc3ff706-3482-4e68-8bf1-129842fa5e4a" />
 
 
+---
 
+## Our conclusions
+- Adding a fan for added airflow **significantly** increases the rate of temperature increase (0.16C/min and 0.19C/min compared to 0.41C/min and 0.37C/min). This is extremelly significant, and it represents a whopping 123% increase (on average).
+- Temperature loss is significant. Even in an enclosed environment like the model house, a substantial amount of air was able to escape.
 
 
