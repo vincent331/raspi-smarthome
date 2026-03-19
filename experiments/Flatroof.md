@@ -52,7 +52,7 @@ The temperature loss:
 
 
 ### Experiment 3
-> This experiment measured heat gain only without the use of a fan for circulation. We had quite alot of time to do this experiment, leaving it on for a whopping 41 minutes of only heat increase. This experiment was significant as it provided more indisputable evidence supporting the airflow argument.
+> This experiment measured heat gain only without the use of a fan for circulation. We had quite alot of time to do this experiment, leaving it on for a whopping 41 minutes of only heat increase. This experiment was significant as it provided more indisputable evidence supporting the airflow argument. As we can see from the gradual plateau in the rate of temperature increase, this shows that our model house nearly reached a steady-state for the heat transfer.
 
 | Starting temperature | Final temperature | Maximum temperature | % Rise in temp | Rate of temperature increase | Average % temp drop per minute | Time taken |
 |----------------------|-------------------|---------------------|----------------|------------------------------|--------------------------------|------------|
