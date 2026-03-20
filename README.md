@@ -16,8 +16,8 @@ Hi. We are students based in London in the UK. Our goal is to create the ultimat
 
 | Roof shape | Our findings |
 |------------|--------------|
-| [Flat roof experiment](https://github.com/vincent331/raspi-smarthome/blob/main/experiments/Flatroof.md) | n/a |
-| [No roof experiment](https://github.com/vincent331/raspi-smarthome/blob/main/experiments/Noroof.md) | n/a |
+| [Flat roof experiment](https://github.com/vincent331/raspi-smarthome/blob/main/experiments/Flatroof.md) | - Adding airflow into a roof, such as using a fan **significantly** increases the rate of temperature increase in a house |
+| [No roof experiment](https://github.com/vincent331/raspi-smarthome/blob/main/experiments/Noroof.md) | - Without a roof, warm air escapes the house at a **outstanding** rate, leading to slower heating and faster heat loss |
 
 
 ## Our code
