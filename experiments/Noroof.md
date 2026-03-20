@@ -23,7 +23,7 @@
 <img width="1047" height="484" alt="image" src="https://github.com/user-attachments/assets/3a66b9ee-56aa-443e-ba10-0de44446f2ab" />
 
 ### Experiment 2
-> Again, we repeated the same experiment as above using the same heater and the same equiptment.
+> Again, we repeated the same experiment as above using the same heater and the same equiptment. This further helped the argument support the roof supremacy, due to the slow heating speeds and the sheer time taken.
 
 | Starting temperature | Final temperature | Maximum temperature | % Rise in temp | Rate of temperature increase | Average % temp rise per minute | Time taken | 
 |----------------------|-------------------|---------------------|----------------|------------------------------|--------------------------------|------------|
