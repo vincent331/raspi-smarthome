@@ -16,7 +16,7 @@ Hi. We are students based in London in the UK. Our goal is to create the ultimat
 
 | Roof shape | Effect |
 |------------|--------|
-| [Flat roof experiment](Flatroof.md) | n/a |
+| [Flat roof experiment](https://github.com/vincent331/raspi-smarthome/blob/main/experiments/Flatroof.md) | n/a |
 
 ## Our code
 
