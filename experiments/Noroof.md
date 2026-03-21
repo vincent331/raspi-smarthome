@@ -14,7 +14,7 @@
 
 ## Our tribulations
 ### Experiment 1
-> This was the first experiment we tried without a roof. We noticed it was significantly slower to heat up than a house with a roof even with the same heater position and power.
+> This was the first experiment we tried without a roof. We noticed it was significantly slower to heat up than a house with a roof even with the same heater position and power. Note how the line is not very straight compared to the Flat Roof experiments. This is likely due to air turbulence from the room we were experimenting in, or if people walked past the model, they would likely move the air molecules around and affect how much air was getting near the radiator before being heated and sensed.
 
 | Starting temperature | Final temperature | Maximum temperature | % Rise in temp | Rate of temperature increase | Average % temp rise per minute | Time taken | 
 |----------------------|-------------------|---------------------|----------------|------------------------------|--------------------------------|------------|
