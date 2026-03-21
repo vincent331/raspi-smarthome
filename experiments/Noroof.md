@@ -6,9 +6,10 @@
 ---
 
 ## Our method
- - A temperature sensor recorded the internal temperature every 5 seconds 
- - Data was collected as the flat roofed model home was exposed to a heating element
- - Temperatures were then recorded and then plotted onto a scatter graph against time and temperature
+ - A temperature sensor recorded the internal temperature every 5 seconds - BME280.
+ - Data was collected as the flat roofed model home was exposed to a heating element 40x40mm MCH (metal ceramics heater).
+ - Temperatures were then recorded and then plotted onto a line graph with temperature against time.
+ - Our model remained the same 200x200x130mm^3 house (from the outside), made of 4mm plywood and 3mm foamboard insulation.
 
 ---
 
