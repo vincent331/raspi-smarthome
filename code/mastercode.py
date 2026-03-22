@@ -5,6 +5,18 @@ import busio
 import adafruit_bme280
 import threading
 import time
+from sklearn.neural_network import MLPRegressor
+import csv
+import os
+import pickle
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+
+
+if not os.path.exists('experimentdata.csv'):
+    with open('experimentdata.csv', 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['temp1', 'temp2', 'heater1', 'heater2', 'fan1', 'fan2', 'target_temp'])
 
 FANPIN1 = 17
 FANPIN2 = 18
@@ -25,16 +37,15 @@ GPIO.output(HEATERPIN1, GPIO.LOW)
 GPIO.output(HEATERPIN2, GPIO.LOW)
 
 i2c = board.I2C()
-
 bme1 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x76)
-bme2 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x77)
+bme2 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x77) #double check ts
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     t1 = bme1.temperature
-    t2 = bme2.temperature
+    t2 = bme2.temperature   
     return render_template('dashboard.html',
                            temp1=round(t1,2),
                            temp2=round(t2,2),
@@ -82,3 +93,5 @@ def temps():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+    
