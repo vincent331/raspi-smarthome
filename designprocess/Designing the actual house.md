@@ -4,7 +4,7 @@
 
 ___
 
-# Designing the house
+## Designing the house
 
 - Firstly, we started by modelling the houses on onshape, a CAD software for the web
 - For the walls, we used *box joints* to ensure a uniform angle throughout the house (attached below)
@@ -15,7 +15,7 @@ ___
 
 (add image of box joints)
 
-# The construction of the house
+## The construction of the house
 
 - After the houses were laser cut and the window/door covers were printed, we started construction
 - We found it relatively easy to assemble the frame of the house, thanks to the box joints
@@ -27,7 +27,8 @@ ___
 
 (add image of completed product + labels)
 
-# What about our instruments?
+## What about our instruments?
+> In instruments, we mean the temperature sensor and the means of heating/cooling
 
 - We attached the BME temperature sensor onto the floor for every house, positioned at the middle of the floor
 - For the heater, we attached it onto one of the sides of the house
