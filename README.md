@@ -31,7 +31,12 @@ Hi. We are students based in London in the UK. Our goal is to experiment with ho
 | [bmetest](bmetest.py) | A program for quickly diagnosing the bme280 sensor which we use to record the temperature. |
 
 ## Our construction process
+> If you are interested, we recommend replicating this experiment yourself! We'd we excited to hear from your results. Please, make yourself welcome to use our code and our CAD. We will make all the CAD files availiable in the future. If you do experiment, don't hesitate to ask us some questions down below or to publish findings to us - we'd love to hear them!
 
 | Name | Description |
 |------|-------------|
 | [Desigining the basic house + construction](https://github.com/vincent331/raspi-smarthome/blob/main/designprocess/Designing%20the%20actual%20house.md) | Documents our design and construction process for the actual house (not roof) and the placements of our measuring instruments for all experiments |
+
+## Contact us
+Feel free to contact us if you have any questions, or even new findings.
+VincentHao100@hotmail.com - Response within 24 hours
