@@ -29,3 +29,9 @@ Hi. We are students based in London in the UK. Our goal is to experiment with ho
 | Name | Description |
 |------|-------------|
 | [bmetest](bmetest.py) | A program for quickly diagnosing the bme280 sensor which we use to record the temperature. |
+
+## Our construction process
+
+| Name | Description |
+|------|-------------|
+| [Desigining the basic house + construction](https://github.com/vincent331/raspi-smarthome/blob/main/designprocess/Designing%20the%20actual%20house.md) | Documents our design and construction process for the actual house (not roof) and the placements of our measuring instruments for all experiments |
