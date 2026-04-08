@@ -31,3 +31,8 @@
 | 25.74C | 26.67C | 26.67C | 3.61% | 0.037C/min | 0.14%/min | 25m15s |
 
 <img width="924" height="374" alt="image" src="https://github.com/user-attachments/assets/bd4e3e21-31da-4a32-8844-20033f7756ab" />
+
+## Our conclusions
+- Please do use a roof! Without a roof, air escapes into the surroundings, making the ordeal of heating up our house **extremely difficult**.
+- Furthermore, without a roof, hot air also escapes **exceptionally** fast, losing heat extremely quickly
+  
