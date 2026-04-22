@@ -2,120 +2,241 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Smart Home Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment Control</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #F5F5F7;
+            --card-bg: #ffffff;
+            --text-main: #1D1D1F;
+            --text-secondary: #86868B;
+            --accent: #0071E3;
+            --card-inner: #F5F5F7;
+            --input-border: #D2D2D7;
+        }
+
+        /* Dark Mode Colors */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #000000;
+                --card-bg: #1C1C1E;
+                --text-main: #F5F5F7;
+                --text-secondary: #A1A1A6;
+                --accent: #0A84FF;
+                --card-inner: #2C2C2E;
+                --input-border: #48484A;
+            }
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-            background: #f2f2f5;
-            color: #111;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 380px;
+            transition: background-color 0.3s ease;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
             text-align: center;
-            padding: 20px;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
         }
 
         .card {
-            display: inline-block;
-            background: white;
-            padding: 20px;
-            margin: 15px;
-            border-radius: 15px;
-            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
-            min-width: 200px;
+            background-color: var(--card-inner);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        h2 { margin-bottom: 10px; }
-        p { font-size: 1.2em; }
-        input[type=range] { width: 80%; }
-        button { 
-            padding: 10px 20px; 
-            border: none; 
-            border-radius: 10px; 
-            background: #007aff; 
-            color: white; 
-            font-weight: bold;
+        .temp-display {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .temp-value {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -2px;
+        }
+
+        .label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Input & Button */
+        .target-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        input[type="number"] {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            padding: 8px;
+            font-size: 16px;
+            width: 65px;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:active {
+            opacity: 0.7;
+        }
+
+        /* iOS Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 51px;
+            height: 31px;
+        }
+
+        .switch input {
+            opacity: 0; width: 0; height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #E9E9EB;
+            transition: .3s;
+            border-radius: 31px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .slider { background-color: #3A3A3C; }
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 27px; width: 27px;
+            left: 2px; bottom: 2px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        input:checked + .slider {
+            background-color: #34C759;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
         }
     </style>
 </head>
 <body>
-    <h1>Smart Home Dashboard</h1>
 
-    <div class="card">
-        <h2>Temperature Sensors</h2>
-        <p>Sensor 1: <span id="temp1">{{ temp1 }}</span> °C</p>
-        <p>Sensor 2: <span id="temp2">{{ temp2 }}</span> °C</p>
+<div class="container">
+    <h1>Lab Control</h1>
+    
+    <div class="temp-display">
+        <div class="label">BME280 Reading</div>
+        <div class="temp-value"><span id="current-temp">--</span>°</div>
     </div>
 
     <div class="card">
-        <h2>Fan Controls</h2>
-        <p>Fan 1 PWM: <span id="fan1">{{ fan1 }}</span>%</p>
-        <input type="range" min="0" max="100" value="{{ fan1 }}" id="fan1slider">
-        <p>Fan 2 PWM: <span id="fan2">{{ fan2 }}</span>%</p>
-        <input type="range" min="0" max="100" value="{{ fan2 }}" id="fan2slider">
+        <span class="label">Target</span>
+        <div class="target-container">
+            <input type="number" id="target-input" value="{{ target_temp }}" step="0.5">
+            <button onclick="setTarget()">Set</button>
+        </div>
     </div>
 
     <div class="card">
-        <h2>Heater Controls</h2>
-        <button onclick="toggleHeater('heater1')">Toggle Heater 1</button>
-        <p>Heater 1 State: <span id="heater1">{{ heater1 }}</span></p>
-        <button onclick="toggleHeater('heater2')">Toggle Heater 2</button>
-        <p>Heater 2 State: <span id="heater2">{{ heater2 }}</span></p>
+        <span class="label" style="color: var(--text-main);">Heater</span>
+        <label class="switch">
+            <input type="checkbox" id="heater-toggle" onchange="toggleDevice('heater', this.checked)">
+            <span class="slider"></span>
+        </label>
     </div>
 
     <div class="card">
-        <h2>Target Temperature</h2>
-        <input type="range" min="15" max="35" value="{{ target_temp }}" id="targetTempSlider">
-        <p>Target: <span id="targetTemp">{{ target_temp }}</span> °C</p>
+        <span class="label" style="color: var(--text-main);">Fan</span>
+        <label class="switch">
+            <input type="checkbox" id="fan-toggle" onchange="toggleDevice('fan', this.checked)">
+            <span class="slider"></span>
+        </label>
     </div>
+</div>
 
 <script>
-function updateDevice(device, state) {
-    fetch('/control_device', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({device: device, state: state})
-    });
-}
+    function updateData() {
+        fetch('/api/temps')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('current-temp').innerText = data.temp;
+                const heaterToggle = document.getElementById('heater-toggle');
+                const fanToggle = document.getElementById('fan-toggle');
+                
+                if(document.activeElement !== heaterToggle) heaterToggle.checked = data.heater === 1;
+                if(document.activeElement !== fanToggle) fanToggle.checked = data.fan === 1;
+            });
+    }
 
-function toggleHeater(device) {
-    let stateElem = document.getElementById(device);
-    let state = stateElem.innerText == "1" ? "off" : "on";
-    updateDevice(device, state);
-}
+    setInterval(updateData, 2000);
+    updateData();
 
-// Fan sliders
-document.getElementById('fan1slider').addEventListener('input', (e) => {
-    document.getElementById('fan1').innerText = e.target.value;
-    updateDevice('fan1', e.target.value);
-});
-document.getElementById('fan2slider').addEventListener('input', (e) => {
-    document.getElementById('fan2').innerText = e.target.value;
-    updateDevice('fan2', e.target.value);
-});
+    function toggleDevice(device, isChecked) {
+        fetch('/control_device', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ device: device, state: isChecked ? 'on' : 'off' })
+        });
+    }
 
-// Target temp slider
-document.getElementById('targetTempSlider').addEventListener('input', (e) => {
-    let target = e.target.value;
-    document.getElementById('targetTemp').innerText = target;
-
-    fetch('/set_target', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `target=${target}`
-    });
-});
-
-// Auto-refresh sensor values every 5s
-setInterval(async () => {
-    const res = await fetch('/api/temps');
-    const data = await res.json();
-    document.getElementById('temp1').innerText = data.temp1;
-    document.getElementById('temp2').innerText = data.temp2;
-    document.getElementById('fan1').innerText = data.fan1;
-    document.getElementById('fan2').innerText = data.fan2;
-    document.getElementById('heater1').innerText = data.heater1;
-    document.getElementById('heater2').innerText = data.heater2;
-    document.getElementById('targetTemp').innerText = data.target_temp;
-}, 5000);
+    function setTarget() {
+        const val = document.getElementById('target-input').value;
+        fetch('/set_target', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ target: val })
+        });
+    }
 </script>
+
 </body>
 </html>
