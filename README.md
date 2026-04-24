@@ -4,7 +4,7 @@
 ## About Us
 Hi. We are students based in London in the UK. Our goal is to experiment with house shape, different algorithms, roof type, etc to create an ideal smart home which uses the least energy as possible while heating or cooling the house. 
 
-Special Mention to the Royal Society Partnership Grant Scheme for sponsoring the project, and our dedicated STEM team leader, Dan Slavinsky for his incredible work.
+**Special Mention to the Royal Society Partnership Grant Scheme for sponsoring the project, and our dedicated STEM team leader, Dan Slavinsky for his incredible work.**
 
 ## Main Experimenting
 - We will primarily be experimenting how the roof pitch (the angle between the sloped part and the base) affects rate of temperature change. Many papers and articles have been written in the past showing how this works, but with limitations such as the location. Not many have tested roof pitch with a real model at all, and also not in UK conditions.
