@@ -33,7 +33,10 @@ Hi. We are students based in London in the UK. Our goal is to experiment with ho
 | [bmetest](bmetest.py) | A program for quickly diagnosing the bme280 sensor which we use to record the temperature. |
 
 ## Our construction process
-> If you are interested, we recommend replicating this experiment yourself! We'd we excited to hear from your results. Please, make yourself welcome to use our code and our CAD. We will make all the CAD files availiable in the future. If you do experiment, don't hesitate to ask us some questions down below or to publish findings to us - we'd love to hear them!
+> If you are interested, we recommend replicating this experiment yourself! We'd we excited to hear from your results. Please, make yourself welcome to use our code and our CAD. All CAD files are available below. If you do experiment, don't hesitate to ask us some questions down below or to publish findings to us - we'd love to hear them!
+> https://cad.onshape.com/documents/529130551f09940206203912/w/ee31a8500997e97f1aa691da/e/b1a0898e06681da6ed8f3e52
+> https://cad.onshape.com/documents/b8587ce09dc4c8c53ae4c49b/w/c211f3e44aa3446b2c8860e3/e/cd3aefbfe74ef3ca53a0623c
+> https://cad.onshape.com/documents/33ed95eb90a61a3cb3a3a3ae/w/4272e0742072b9ffce77a9a9/e/05e7c1d25afa338200b83036
 
 | Name | Description |
 |------|-------------|
