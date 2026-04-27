@@ -84,4 +84,11 @@ def control_device():
         if device == 'fan':
             app_state['fan_on'] = state
         elif device == 'heater':
-            app_state['heater_on'] = stat
+            app_state['heater_on'] = state
+    return jsonify({'status': 'ok'})
+
+if __name__ == '__main__':
+    try:
+        app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
+    finally:
+        GPIO.cleanup()
