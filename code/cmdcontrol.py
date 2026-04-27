@@ -7,21 +7,21 @@ import os
 import queue
 from adafruit_bme280 import basic as adafruit_bme280
 
-# --- Configuration ---
+#super fun functions
 FANPIN = 17
 HEATERPIN = 27
 LOG_FILE = "sensor_data.csv"
-current_goal = 0.0  # Tracks the active temp we are waiting for
+current_goal = 0.0#tracks active temp to go to
 running = True
 
-# --- Queue & State Variables ---
+#queue and state vars
 command_queue = queue.Queue()
 history_queue = []
 current_task = "Idle"
 auto_paused = False
 interrupt_auto = False
 
-# --- Hardware Setup ---
+#hardware stuff
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(FANPIN, GPIO.OUT)
 GPIO.setup(HEATERPIN, GPIO.OUT)
@@ -40,7 +40,7 @@ def write_to_csv(data_list):
             writer.writerow(["Timestamp", "Temp_C", "Humidity_%", "Pressure_hPa", "Current_Goal", "Fan_Status", "Heater_Status"])
         writer.writerow(data_list)
 
-# --- Threads ---
+#data log to csv
 def log_data():
     while running:
         try:
@@ -61,7 +61,7 @@ def display_status():
             h_s = "ON" if GPIO.input(HEATERPIN) else "OFF"
             next_tasks = list(command_queue.queue)[:2] 
             queue_str = " -> ".join(next_tasks) if next_tasks else "None"
-            # Display current temp and what the system is currently doing
+            #shwo current temp
             print(f"\r[TEMP: {t:.2f}°C] [FAN: {f_s} | HEAT: {h_s}] | DOING: {current_task} | NEXT: {queue_str}      ", end="")
         except: pass
         time.sleep(2)
@@ -83,7 +83,7 @@ def mission_runner():
         try:
             if cmd_type == "temp":
                 goal = float(parts[1])
-                # Safety constraints
+                #Safety limits ---------------------------- CHANGE THIS, 28 I THINK?
                 if goal > 30.0: goal = 30.0
                 elif goal < 18.0: goal = 18.0
                 current_goal = goal
@@ -128,7 +128,7 @@ def mission_runner():
         command_queue.task_done()
         if interrupt_auto: interrupt_auto = False
 
-# --- Controller ---
+#Controller
 threading.Thread(target=display_status, daemon=True).start()
 threading.Thread(target=log_data, daemon=True).start()
 threading.Thread(target=mission_runner, daemon=True).start()
@@ -138,7 +138,7 @@ try:
         cmd = input().lower().strip()
         if not cmd: continue
 
-        if cmd.startswith("auto"):
+        if cmd.startswith("auto"):#auto function
             auto_paused = False
             interrupt_auto = False
             raw_cmds = cmd.split()[1:]
@@ -153,9 +153,15 @@ try:
                     i += 1
                 else: i += 1
 
-        elif cmd == "qview":
+        elif cmd == "qview":#command to view queue status and history
             print(f"\n\n--- QUEUE STATUS ---\nDONE: {history_queue[-5:]}\nDOING: {current_task}\nTO DO: {list(command_queue.queue)}\n")
-        elif cmd == "qdel":
+
+        elif cmd == "qclear":#clears list but keeps current task going
+            with command_queue.mutex:
+                command_queue.queue.clear()
+            print(f"\n[SYSTEM] Command queue cleared. Finishing current task: {current_task}")
+
+        elif cmd == "qdel":#deletes EVERYTHING list related, even current task
             interrupt_auto = True
             with command_queue.mutex: command_queue.queue.clear()
         elif cmd == "qpause": auto_paused = True
@@ -168,3 +174,23 @@ try:
             break
 finally:
     GPIO.cleanup()
+
+'''
+HOW TO USE THIS
+
+Manual Commands:
+fan/heater on/off
+line
+note hi_there
+exit
+
+Auto sequence commands: (Add word auto at start)
+temp 28
+time 10
+all other manual ones
+
+'Debug' queue commands:
+qview - Shows status report
+qpause - Pauses queue and sequence (auto to resume)
+qdel - Delete queue and stop current task
+'''
