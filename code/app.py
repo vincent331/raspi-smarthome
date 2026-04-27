@@ -4,7 +4,7 @@ import math
 import threading
 import time
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 
 try:
     import RPi.GPIO as GPIO
@@ -235,18 +235,9 @@ def control_loop():
 
 @app.route("/")
 def home():
-    return jsonify(
-        {
-            "service": "lab-control",
-            "message": "HTML dashboard removed. Use the JSON API endpoints instead.",
-            "endpoints": {
-                "state": "/api/state",
-                "set_target": "/api/set_target",
-                "set_mode": "/api/set_mode",
-                "control_device": "/api/control_device",
-            },
-        }
-    )
+    with state_lock:
+        target = app_state["target_temp"]
+    return render_template("dashboard.html", target_temp=target)
 
 
 @app.route("/api/state")
