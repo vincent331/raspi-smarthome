@@ -11,11 +11,12 @@ from adafruit_bme280 import basic as adafruit_bme280
 FANPIN = 17
 HEATERPIN = 27
 LOG_FILE = "sensor_data.csv"
-target_temp = 25.0
+current_goal = 0.0  # Tracks the active temp we are waiting for
 running = True
 
 # --- Queue & State Variables ---
 command_queue = queue.Queue()
+history_queue = []
 current_task = "Idle"
 auto_paused = False
 interrupt_auto = False
@@ -31,19 +32,12 @@ i2c = board.I2C()
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x76)
 bme280.sea_level_pressure = 1013.25
 
-# --- Helper Functions ---
-def set_target_safe(new_temp):
-    global target_temp
-    if new_temp > 30.0: target_temp = 30.0
-    elif new_temp < 18.0: target_temp = 18.0
-    else: target_temp = new_temp
-
 def write_to_csv(data_list):
     file_exists = os.path.isfile(LOG_FILE)
     with open(LOG_FILE, mode='a', newline='') as f:
         writer = csv.writer(f)
         if not file_exists:
-            writer.writerow(["Timestamp", "Temp_C", "Humidity_%", "Pressure_hPa", "Target_C", "Fan_Status", "Heater_Status"])
+            writer.writerow(["Timestamp", "Temp_C", "Humidity_%", "Pressure_hPa", "Current_Goal", "Fan_Status", "Heater_Status"])
         writer.writerow(data_list)
 
 # --- Threads ---
@@ -53,8 +47,8 @@ def log_data():
             t, h, p = bme280.temperature, bme280.relative_humidity, bme280.pressure
             f_s = 1 if GPIO.input(FANPIN) else 0
             h_s = 1 if GPIO.input(HEATERPIN) else 0
-            write_to_csv([time.strftime("%Y-%m-%d %H:%M:%S"), f"{t:.2f}", f"{h:.2f}", f"{p:.2f}", target_temp, f_s, h_s])
-        except: pass # Prevent I2C glitches from crashing the logger
+            write_to_csv([time.strftime("%Y-%m-%d %H:%M:%S"), f"{t:.2f}", f"{h:.2f}", f"{p:.2f}", current_goal, f_s, h_s])
+        except: pass 
         time.sleep(5)
 
 def display_status():
@@ -67,15 +61,17 @@ def display_status():
             h_s = "ON" if GPIO.input(HEATERPIN) else "OFF"
             next_tasks = list(command_queue.queue)[:2] 
             queue_str = " -> ".join(next_tasks) if next_tasks else "None"
-            print(f"\r[TEMP: {t:.2f}°C | TGT: {target_temp}°C] [FAN: {f_s} | HEAT: {h_s}] | DOING: {current_task} | NEXT: {queue_str}      ", end="")
+            # Display current temp and what the system is currently doing
+            print(f"\r[TEMP: {t:.2f}°C] [FAN: {f_s} | HEAT: {h_s}] | DOING: {current_task} | NEXT: {queue_str}      ", end="")
         except: pass
         time.sleep(2)
 
 def mission_runner():
-    global auto_paused, interrupt_auto, target_temp, current_task
+    global auto_paused, interrupt_auto, current_goal, current_task
     while running:
         if auto_paused or command_queue.empty():
             current_task = "Paused" if auto_paused else "Idle"
+            current_goal = 0.0
             time.sleep(0.5)
             continue
             
@@ -87,20 +83,23 @@ def mission_runner():
         try:
             if cmd_type == "temp":
                 goal = float(parts[1])
-                set_target_safe(goal)
+                # Safety constraints
+                if goal > 30.0: goal = 30.0
+                elif goal < 18.0: goal = 18.0
+                current_goal = goal
+                
                 start_wait = time.time()
-                timeout_seconds = 90 * 60 # 1.5 Hours
+                timeout_seconds = 90 * 60 
                 
                 while running and not interrupt_auto:
                     current_t = bme280.temperature
-                    if abs(current_t - target_temp) < 0.5:
-                        write_to_csv([f"EVENT: Reached {target_temp}C", "", "", "", "", "", ""])
+                    if abs(current_t - current_goal) < 0.5:
+                        write_to_csv([f"EVENT: Reached {current_goal}C", "", "", "", "", "", ""])
                         break
                     
                     if (time.time() - start_wait) > timeout_seconds:
-                        # SAFETY TRIGGER: Force heater off on timeout
                         GPIO.output(HEATERPIN, GPIO.LOW)
-                        write_to_csv([f"TIMEOUT: Target {target_temp}C failed. HEATER FORCED OFF", "", "", "", "", "", ""])
+                        write_to_csv([f"TIMEOUT: Goal {current_goal}C failed. HEATER OFF", "", "", "", "", "", ""])
                         print(f"\n[ALERT] Timeout reached. Heater forced OFF.")
                         break
                     time.sleep(1)
@@ -124,6 +123,8 @@ def mission_runner():
         except Exception as e:
             print(f"\n[ERROR] Task '{task}' failed: {e}")
 
+        history_queue.append(task)
+        if len(history_queue) > 10: history_queue.pop(0)
         command_queue.task_done()
         if interrupt_auto: interrupt_auto = False
 
@@ -152,20 +153,12 @@ try:
                     i += 1
                 else: i += 1
 
+        elif cmd == "qview":
+            print(f"\n\n--- QUEUE STATUS ---\nDONE: {history_queue[-5:]}\nDOING: {current_task}\nTO DO: {list(command_queue.queue)}\n")
         elif cmd == "qdel":
             interrupt_auto = True
             with command_queue.mutex: command_queue.queue.clear()
-            print("\n[SYSTEM] Queue Cleared.")
-            
-        elif cmd == "qpause":
-            auto_paused = True
-
-        elif cmd.startswith("target"):
-            try:
-                val = float(''.join(filter(lambda x: x.isdigit() or x == '.', cmd)))
-                set_target_safe(val)
-            except: pass
-
+        elif cmd == "qpause": auto_paused = True
         elif cmd == "line": write_to_csv(["-"*20, "", "", "", "", "", ""])
         elif cmd.startswith("note "): write_to_csv([f"NOTE: {cmd[5:]}", "", "", "", "", "", ""])
         elif cmd in ["fan on", "fan off"]: GPIO.output(FANPIN, GPIO.HIGH if "on" in cmd else GPIO.LOW)
