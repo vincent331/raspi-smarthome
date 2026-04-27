@@ -1,242 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experiment Control</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #F5F5F7;
-            --card-bg: #ffffff;
-            --text-main: #1D1D1F;
-            --text-secondary: #86868B;
-            --accent: #0071E3;
-            --card-inner: #F5F5F7;
-            --input-border: #D2D2D7;
-        }
-
-        /* Dark Mode Colors */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #000000;
-                --card-bg: #1C1C1E;
-                --text-main: #F5F5F7;
-                --text-secondary: #A1A1A6;
-                --accent: #0A84FF;
-                --card-inner: #2C2C2E;
-                --input-border: #48484A;
-            }
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            transition: background-color 0.3s ease;
-        }
-
-        .container {
-            background-color: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            padding: 40px;
-            width: 100%;
-            max-width: 380px;
-            transition: background-color 0.3s ease;
-        }
-
-        h1 {
-            font-size: 22px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 30px;
-            letter-spacing: -0.5px;
-        }
-
-        .card {
-            background-color: var(--card-inner);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .temp-display {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .temp-value {
-            font-size: 56px;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: -2px;
-        }
-
-        .label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Input & Button */
-        .target-container {
-            display: flex;
-            gap: 8px;
-        }
-
-        input[type="number"] {
-            background-color: var(--card-bg);
-            color: var(--text-main);
-            border: 1px solid var(--input-border);
-            border-radius: 10px;
-            padding: 8px;
-            font-size: 16px;
-            width: 65px;
-            text-align: center;
-            outline: none;
-        }
-
-        button {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        button:active {
-            opacity: 0.7;
-        }
-
-        /* iOS Toggle Switch */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 51px;
-            height: 31px;
-        }
-
-        .switch input {
-            opacity: 0; width: 0; height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #E9E9EB;
-            transition: .3s;
-            border-radius: 31px;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .slider { background-color: #3A3A3C; }
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 27px; width: 27px;
-            left: 2px; bottom: 2px;
-            background-color: white;
-            transition: .3s;
-            border-radius: 50%;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-        }
-
-        input:checked + .slider {
-            background-color: #34C759;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(20px);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Control</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, sans-serif;
+    background: #f0f0f0;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh;
+  }
+  .panel {
+    background: white; border-radius: 16px;
+    padding: 32px 28px; width: 320px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 24px; text-align: center; color: #111; }
+  .temp { text-align: center; margin-bottom: 24px; }
+  .temp span { font-size: 52px; font-weight: 700; color: #0071e3; }
+  .temp small { display: block; font-size: 12px; color: #888; margin-top: 2px; }
+  .row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 0; border-top: 1px solid #eee;
+  }
+  .row label { font-size: 14px; color: #333; font-weight: 500; }
+  .row input[type=number] {
+    width: 70px; padding: 6px 8px; border: 1px solid #ccc;
+    border-radius: 8px; font-size: 15px; text-align: center;
+  }
+  .row button {
+    background: #0071e3; color: white; border: none;
+    border-radius: 8px; padding: 7px 14px; font-size: 13px;
+    font-weight: 600; cursor: pointer; margin-left: 6px;
+  }
+  /* toggle */
+  .switch { position: relative; display: inline-block; width: 48px; height: 28px; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute; inset: 0; background: #ccc;
+    border-radius: 28px; cursor: pointer; transition: .25s;
+  }
+  .slider:before {
+    content: ""; position: absolute;
+    width: 22px; height: 22px; left: 3px; bottom: 3px;
+    background: white; border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: .25s;
+  }
+  input:checked + .slider { background: #34c759; }
+  input:checked + .slider:before { transform: translateX(20px); }
+  #mode-label { font-size: 12px; color: #888; margin-top: 4px; text-align:center; }
+</style>
 </head>
 <body>
+<div class="panel">
+  <h1>Lab Control</h1>
 
-<div class="container">
-    <h1>Lab Control</h1>
-    
-    <div class="temp-display">
-        <div class="label">BME280 Reading</div>
-        <div class="temp-value"><span id="current-temp">--</span>°</div>
-    </div>
+  <div class="temp">
+    <span id="temp-val">--</span><sup style="font-size:24px">°C</sup>
+    <small>BME280</small>
+  </div>
 
-    <div class="card">
-        <span class="label">Target</span>
-        <div class="target-container">
-            <input type="number" id="target-input" value="{{ target_temp }}" step="0.5">
-            <button onclick="setTarget()">Set</button>
-        </div>
+  <div class="row">
+    <label>Target (°C)</label>
+    <div>
+      <input type="number" id="target-input" value="{{ target_temp }}" step="0.5">
+      <button onclick="setTarget()">Set</button>
     </div>
+  </div>
 
-    <div class="card">
-        <span class="label" style="color: var(--text-main);">Heater</span>
-        <label class="switch">
-            <input type="checkbox" id="heater-toggle" onchange="toggleDevice('heater', this.checked)">
-            <span class="slider"></span>
-        </label>
+  <div class="row">
+    <label>Mode</label>
+    <div>
+      <input type="number" style="display:none"><!-- spacer -->
+      <button id="mode-btn" onclick="toggleMode()" style="background:#555">Auto</button>
     </div>
+  </div>
 
-    <div class="card">
-        <span class="label" style="color: var(--text-main);">Fan</span>
-        <label class="switch">
-            <input type="checkbox" id="fan-toggle" onchange="toggleDevice('fan', this.checked)">
-            <span class="slider"></span>
-        </label>
-    </div>
+  <div class="row">
+    <label>Heater</label>
+    <label class="switch">
+      <input type="checkbox" id="heater-toggle" onchange="toggleDevice('heater', this.checked)">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="row">
+    <label>Fan</label>
+    <label class="switch">
+      <input type="checkbox" id="fan-toggle" onchange="toggleDevice('fan', this.checked)">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div id="mode-label">Mode: manual</div>
 </div>
 
 <script>
-    function updateData() {
-        fetch('/api/temps')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('current-temp').innerText = data.temp;
-                const heaterToggle = document.getElementById('heater-toggle');
-                const fanToggle = document.getElementById('fan-toggle');
-                
-                if(document.activeElement !== heaterToggle) heaterToggle.checked = data.heater === 1;
-                if(document.activeElement !== fanToggle) fanToggle.checked = data.fan === 1;
-            });
-    }
+  let currentMode = 'manual';
 
-    setInterval(updateData, 2000);
-    updateData();
+  // FIX 1+2: correct endpoint + correct field names
+  function poll() {
+    fetch('/api/state')
+      .then(r => r.json())
+      .then(d => {
+        document.getElementById('temp-val').textContent = d.current_temp;
+        document.getElementById('mode-label').textContent = 'Mode: ' + d.mode;
+        currentMode = d.mode;
+        document.getElementById('mode-btn').textContent = d.mode === 'auto' ? 'Manual' : 'Auto';
 
-    function toggleDevice(device, isChecked) {
-        fetch('/control_device', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ device: device, state: isChecked ? 'on' : 'off' })
-        });
-    }
+        const ht = document.getElementById('heater-toggle');
+        const ft = document.getElementById('fan-toggle');
+        if (document.activeElement !== ht) ht.checked = d.heater_on;
+        if (document.activeElement !== ft) ft.checked = d.fan_on;
 
-    function setTarget() {
-        const val = document.getElementById('target-input').value;
-        fetch('/set_target', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ target: val })
-        });
-    }
+        // grey out toggles in auto mode
+        [ht, ft].forEach(el => el.disabled = (d.mode === 'auto'));
+      });
+  }
+
+  setInterval(poll, 2000);
+  poll();
+
+  function setTarget() {
+    const val = document.getElementById('target-input').value;
+    fetch('/api/set_target', {         // FIX 1: was /set_target
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ target: val })
+    });
+  }
+
+  function toggleDevice(device, checked) {
+    fetch('/api/control_device', {     // FIX 1: was /control_device
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ device, state: checked ? 'on' : 'off' })
+    });
+  }
+
+  function toggleMode() {
+    const next = currentMode === 'manual' ? 'auto' : 'manual';
+    fetch('/api/set_mode', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ mode: next })
+    }).then(poll);
+  }
 </script>
-
 </body>
 </html>
