@@ -7,50 +7,188 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: -apple-system, sans-serif;
-    background: #f0f0f0;
-    display: flex; justify-content: center; align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: linear-gradient(180deg, #edf4ff 0%, #f7f7f7 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
+    padding: 24px;
+    color: #1d1d1f;
   }
   .panel {
-    background: white; border-radius: 16px;
-    padding: 32px 28px; width: 320px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 24px;
+    width: min(100%, 380px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
   }
-  h1 { font-size: 18px; font-weight: 600; margin-bottom: 24px; text-align: center; color: #111; }
-  .temp { text-align: center; margin-bottom: 24px; }
-  .temp span { font-size: 52px; font-weight: 700; color: #0071e3; }
-  .temp small { display: block; font-size: 12px; color: #888; margin-top: 2px; }
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .temp {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .temp span {
+    font-size: 54px;
+    font-weight: 700;
+    color: #0b6bcb;
+  }
+  .temp small {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .status-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    background: #fafafa;
+  }
+  .status-card strong {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .status-pill {
+    display: inline-block;
+    min-width: 64px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .status-pill.ok {
+    background: #e8f7ed;
+    color: #167b38;
+  }
+  .status-pill.bad {
+    background: #fdecec;
+    color: #b42318;
+  }
+  .message {
+    display: none;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 18px;
+  }
+  .message.info {
+    display: block;
+    background: #eef6ff;
+    color: #0b4f88;
+  }
+  .message.warn {
+    display: block;
+    background: #fff3cd;
+    color: #8a6400;
+  }
+  .message.error {
+    display: block;
+    background: #fdecec;
+    color: #b42318;
+  }
   .row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 14px 0; border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid #ececec;
+    gap: 12px;
   }
-  .row label { font-size: 14px; color: #333; font-weight: 500; }
+  .row label {
+    font-size: 14px;
+    font-weight: 600;
+  }
   .row input[type=number] {
-    width: 70px; padding: 6px 8px; border: 1px solid #ccc;
-    border-radius: 8px; font-size: 15px; text-align: center;
+    width: 82px;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 15px;
+    text-align: center;
+  }
+  .button-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .row button {
-    background: #0071e3; color: white; border: none;
-    border-radius: 8px; padding: 7px 14px; font-size: 13px;
-    font-weight: 600; cursor: pointer; margin-left: 6px;
+    background: #0b6bcb;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
   }
-  /* toggle */
-  .switch { position: relative; display: inline-block; width: 48px; height: 28px; }
-  .switch input { opacity: 0; width: 0; height: 0; }
+  .row button.secondary {
+    background: #4b5563;
+  }
+  .row button:disabled,
+  .switch input:disabled + .slider {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+  }
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
   .slider {
-    position: absolute; inset: 0; background: #ccc;
-    border-radius: 28px; cursor: pointer; transition: .25s;
+    position: absolute;
+    inset: 0;
+    background: #cbd5e1;
+    border-radius: 28px;
+    transition: .25s;
+    cursor: pointer;
   }
   .slider:before {
-    content: ""; position: absolute;
-    width: 22px; height: 22px; left: 3px; bottom: 3px;
-    background: white; border-radius: 50%;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: .25s;
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: .25s;
   }
-  input:checked + .slider { background: #34c759; }
-  input:checked + .slider:before { transform: translateX(20px); }
-  #mode-label { font-size: 12px; color: #888; margin-top: 4px; text-align:center; }
+  input:checked + .slider {
+    background: #2ea44f;
+  }
+  input:checked + .slider:before {
+    transform: translateX(22px);
+  }
+  .footnote {
+    margin-top: 18px;
+    font-size: 12px;
+    text-align: center;
+    color: #6b7280;
+  }
 </style>
 </head>
 <body>
@@ -58,23 +196,39 @@
   <h1>Lab Control</h1>
 
   <div class="temp">
-    <span id="temp-val">--</span><sup style="font-size:24px">°C</sup>
-    <small>BME280</small>
+    <span id="temp-val">--</span><sup style="font-size:24px">C</sup>
+    <small id="temp-source">Waiting for BME280 reading</small>
   </div>
 
+  <div class="status-grid">
+    <div class="status-card">
+      <strong>Sensor</strong>
+      <span class="status-pill bad" id="sensor-status">offline</span>
+    </div>
+    <div class="status-card">
+      <strong>GPIO</strong>
+      <span class="status-pill bad" id="gpio-status">offline</span>
+    </div>
+    <div class="status-card">
+      <strong>Mode</strong>
+      <span class="status-pill ok" id="mode-status">manual</span>
+    </div>
+  </div>
+
+  <div id="message" class="message"></div>
+
   <div class="row">
-    <label>Target (°C)</label>
-    <div>
+    <label for="target-input">Target (C)</label>
+    <div class="button-group">
       <input type="number" id="target-input" value="{{ target_temp }}" step="0.5">
-      <button onclick="setTarget()">Set</button>
+      <button id="target-btn" onclick="setTarget()">Set</button>
     </div>
   </div>
 
   <div class="row">
     <label>Mode</label>
-    <div>
-      <input type="number" style="display:none"><!-- spacer -->
-      <button id="mode-btn" onclick="toggleMode()" style="background:#555">Auto</button>
+    <div class="button-group">
+      <button id="mode-btn" class="secondary" onclick="toggleMode()">Switch to Auto</button>
     </div>
   </div>
 
@@ -94,60 +248,159 @@
     </label>
   </div>
 
-  <div id="mode-label">Mode: manual</div>
+  <div class="footnote" id="updated-at">No readings yet.</div>
 </div>
 
 <script>
   let currentMode = 'manual';
 
-  // FIX 1+2: correct endpoint + correct field names
-  function poll() {
-    fetch('/api/state')
-      .then(r => r.json())
-      .then(d => {
-        document.getElementById('temp-val').textContent = d.current_temp;
-        document.getElementById('mode-label').textContent = 'Mode: ' + d.mode;
-        currentMode = d.mode;
-        document.getElementById('mode-btn').textContent = d.mode === 'auto' ? 'Manual' : 'Auto';
+  function setMessage(text, level) {
+    const box = document.getElementById('message');
+    if (!text) {
+      box.textContent = '';
+      box.className = 'message';
+      return;
+    }
+    box.textContent = text;
+    box.className = 'message ' + level;
+  }
 
-        const ht = document.getElementById('heater-toggle');
-        const ft = document.getElementById('fan-toggle');
-        if (document.activeElement !== ht) ht.checked = d.heater_on;
-        if (document.activeElement !== ft) ft.checked = d.fan_on;
+  async function apiRequest(url, body) {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
 
-        // grey out toggles in auto mode
-        [ht, ft].forEach(el => el.disabled = (d.mode === 'auto'));
+    let payload = {};
+    try {
+      payload = await response.json();
+    } catch (_err) {
+      throw new Error('Server returned an unreadable response.');
+    }
+
+    if (!response.ok || payload.status === 'error') {
+      throw new Error(payload.error || payload.message || 'Request failed.');
+    }
+
+    if (payload.status === 'warning') {
+      setMessage(payload.message || 'Request completed with a warning.', 'warn');
+    } else {
+      setMessage('', 'info');
+    }
+
+    return payload;
+  }
+
+  function formatTimestamp(value) {
+    if (!value) {
+      return 'No readings yet.';
+    }
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return 'Last update: ' + value;
+    }
+    return 'Last update: ' + date.toLocaleString();
+  }
+
+  function updatePage(data) {
+    currentMode = data.mode;
+
+    document.getElementById('temp-val').textContent =
+      data.current_temp === null ? '--' : data.current_temp.toFixed(2);
+    document.getElementById('temp-source').textContent =
+      data.current_temp === null ? 'Waiting for BME280 reading' : 'BME280 sensor';
+    document.getElementById('updated-at').textContent = formatTimestamp(data.last_updated);
+
+    document.getElementById('mode-status').textContent = data.mode;
+    document.getElementById('mode-status').className =
+      'status-pill ' + (data.mode === 'auto' ? 'ok' : 'bad');
+
+    document.getElementById('sensor-status').textContent =
+      data.sensor_ready ? 'online' : 'offline';
+    document.getElementById('sensor-status').className =
+      'status-pill ' + (data.sensor_ready ? 'ok' : 'bad');
+
+    document.getElementById('gpio-status').textContent =
+      data.gpio_ready ? 'online' : 'offline';
+    document.getElementById('gpio-status').className =
+      'status-pill ' + (data.gpio_ready ? 'ok' : 'bad');
+
+    document.getElementById('mode-btn').textContent =
+      data.mode === 'manual' ? 'Switch to Auto' : 'Switch to Manual';
+
+    const heater = document.getElementById('heater-toggle');
+    const fan = document.getElementById('fan-toggle');
+
+    heater.checked = Boolean(data.heater_on);
+    fan.checked = Boolean(data.fan_on);
+
+    const controlsDisabled = data.mode === 'auto' || !data.gpio_ready;
+    heater.disabled = controlsDisabled;
+    fan.disabled = controlsDisabled;
+
+    const targetInput = document.getElementById('target-input');
+    if (document.activeElement !== targetInput && typeof data.target_temp === 'number') {
+      targetInput.value = data.target_temp;
+    }
+
+    if (data.last_sensor_error) {
+      setMessage(data.last_sensor_error, 'error');
+    } else if (data.last_gpio_error) {
+      setMessage(data.last_gpio_error, 'warn');
+    } else if (data.mode === 'auto' && data.current_temp === null) {
+      setMessage('Auto mode is waiting for a valid temperature reading.', 'warn');
+    } else {
+      setMessage('', 'info');
+    }
+  }
+
+  async function poll() {
+    try {
+      const response = await fetch('/api/state');
+      const data = await response.json();
+      updatePage(data);
+    } catch (_err) {
+      setMessage('Could not reach the server. Check that Flask is still running.', 'error');
+    }
+  }
+
+  async function setTarget() {
+    const value = document.getElementById('target-input').value;
+    try {
+      await apiRequest('/api/set_target', { target: value });
+      await poll();
+    } catch (err) {
+      setMessage(err.message, 'error');
+    }
+  }
+
+  async function toggleMode() {
+    const nextMode = currentMode === 'manual' ? 'auto' : 'manual';
+    try {
+      await apiRequest('/api/set_mode', { mode: nextMode });
+      await poll();
+    } catch (err) {
+      setMessage(err.message, 'error');
+      await poll();
+    }
+  }
+
+  async function toggleDevice(device, checked) {
+    try {
+      await apiRequest('/api/control_device', {
+        device: device,
+        state: checked ? 'on' : 'off'
       });
+      await poll();
+    } catch (err) {
+      setMessage(err.message, 'error');
+      await poll();
+    }
   }
 
   setInterval(poll, 2000);
   poll();
-
-  function setTarget() {
-    const val = document.getElementById('target-input').value;
-    fetch('/api/set_target', {         // FIX 1: was /set_target
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ target: val })
-    });
-  }
-
-  function toggleDevice(device, checked) {
-    fetch('/api/control_device', {     // FIX 1: was /control_device
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ device, state: checked ? 'on' : 'off' })
-    });
-  }
-
-  function toggleMode() {
-    const next = currentMode === 'manual' ? 'auto' : 'manual';
-    fetch('/api/set_mode', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ mode: next })
-    }).then(poll);
-  }
 </script>
 </body>
 </html>
