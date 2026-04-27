@@ -193,4 +193,13 @@ all other manual ones
 qview - Shows status report
 qpause - Pauses queue and sequence (auto to resume)
 qdel - Delete queue and stop current task
+
+Example cases:
+'I want to heat to 27C and then wait 2 minutes, note down on csv file  and hold for 15 more minutes and then note it's done'
+auto heater on temp 27 time 2 note reached_27 time 15 note done
+'I want to repeat heating to 28C and then leaving it to cool to 23C, wait for 5 minutes and repeat'
+auto heater on temp 28 heater off temp 23 note cycle1_done time 5 .... etc
+'I want to just see how much you can heat in 1hr and then cool down to starting temp of 22'
+auto heater on time 60 heater off temp 22 note test_done
+
 '''
